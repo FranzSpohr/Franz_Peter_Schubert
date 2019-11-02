@@ -1,2 +1,2 @@
-# Franz_Peter_Schubert
+# Franz Peter Schubert
 Chrome extension 
