@@ -1,0 +1,22 @@
+{
+  "name": "schubert",
+  "version": "1.0.0",
+  "description": "Does Slate stuff.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FranzSpohr/Schubert.git"
+  },
+  "keywords": [
+    "Slate"
+  ],
+  "author": "Franz Spohr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FranzSpohr/Schubert/issues"
+  },
+  "homepage": "https://github.com/FranzSpohr/Schubert#readme"
+}

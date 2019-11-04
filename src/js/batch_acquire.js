@@ -41,7 +41,7 @@ function Toggle_Zoom(event) {
     Click_Zoomer ();
   } else if (event.code == 'NumpadSubtract'||event.code == 'Minus'||event.type == 'contextmenu') {
     event.preventDefault();
-    if (zoomCount == 0) {return};
+    if (zoomCount == 0) {return}
     const elements = document.querySelectorAll('.batch_page_container > img');
     elements.forEach(function(el) {
       if (el.src.includes(`z=${zoom_Levels[zoomCount]}`)) {
