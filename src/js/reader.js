@@ -8,7 +8,7 @@
 // @updateURL    //https://github.com/FranzSpohr/Slate_Tools/blob/master/reader_zoom.user.js
 // ==/UserScript==
 
-var zoomLevel = 0; // zoom level of a page
+var zoomLevel = 0;  // zoom level of a page
 var slideIndex = 1; // which page to display in viewer
 var imageLoaded = false; // toggled when higher DPI images are loaded
 var activeTab; // Slate tab that the images were loaded from
@@ -18,7 +18,7 @@ var pageNumber; // stores the element containing page numbers
 
 // creates an overlay that serves as a canvas for all elements created by this userscript
 var overlay = document.createElement('div');
-overlay.id = 'overlayUMich';
+overlay.id = 'overlaySchubert';
 overlay.onclick = function() {toggleZoom('left')};
 overlay.oncontextmenu = function() {toggleZoom('right')};
 document.body.appendChild(overlay);
@@ -31,7 +31,7 @@ overlay.tabIndex = -1; // enables keyboard controls by setting focus on the over
 // injects button into the footer of Slate Reader. clicking it will open the viewer.
 var input = document.createElement('input');
 input.type = 'button';
-input.id = 'buttonUMich';
+input.id = 'buttonSchubert';
 input.value = 'Display Larger Images';
 input.onclick = overlayOn;
 document.getElementsByClassName('reader_footer')[0].appendChild(input);
@@ -83,59 +83,59 @@ function addElements(imageSrc, startPg, endPg, currPg) {
   var appID = table.rows[1].cells[0].innerHTML + " " + table.rows[1].cells[1].innerHTML; // student UMID
 
   var studentInfo = document.createElement('div');
-  studentInfo.id = 'studentUMich';
+  studentInfo.id = 'studentSchubert';
   studentInfo.innerHTML = appName + '<br>' + appID;
   studentInfo.onclick = overlayOff;
-  document.getElementById('overlayUMich').appendChild(studentInfo);
+  document.getElementById('overlaySchubert').appendChild(studentInfo);
 
   var openTooltip = document.createElement('div');
-  openTooltip.id = 'opentooltipUMich';
+  openTooltip.id = 'opentooltipSchubert';
   openTooltip.innerHTML = '?';
   openTooltip.onclick = displayTooltip;
-  document.getElementById('overlayUMich').appendChild(openTooltip);
+  document.getElementById('overlaySchubert').appendChild(openTooltip);
 
   // page counter on the upper right corner, does not need to be looped?
   var pgCounter = document.createElement('div');
-  pgCounter.id = 'numbertextUMich';
+  pgCounter.id = 'numbertextSchubert';
   pgCounter.innerHTML = 'Page ' + currPg + ' of ' + endPg;
   pgCounter.onclick = overlayOff;
-  document.getElementById('overlayUMich').appendChild(pgCounter);
+  document.getElementById('overlaySchubert').appendChild(pgCounter);
 
   // creates anchor elements on the edges of the screen for switching between pages
   var forward = document.createElement('a');
-  forward.className = 'nextUMich';
+  forward.className = 'nextSchubert';
   forward.onclick = function() {plusSlides(1)};
   forward.innerHTML = '&#10095';
-  document.getElementById('overlayUMich').appendChild(forward);
+  document.getElementById('overlaySchubert').appendChild(forward);
 
   // creates anchor elements on the edges of the screen for switching between pages
   var backward = document.createElement('a');
-  backward.className = 'prevUMich';
+  backward.className = 'prevSchubert';
   backward.onclick = function() {plusSlides(-1)};
   backward.innerHTML = '&#10094';
-  document.getElementById('overlayUMich').appendChild(backward);
+  document.getElementById('overlaySchubert').appendChild(backward);
 
   // container for the navigation dots
   var dotContainer = document.createElement('div');
-  dotContainer.id = 'dotContainerUMich';
-  document.getElementById('overlayUMich').appendChild(dotContainer);
+  dotContainer.id = 'dotContainerSchubert';
+  document.getElementById('overlaySchubert').appendChild(dotContainer);
 
   for (let i = startPg; i <= endPg; i++) {
     // Contains the images
     var slides = document.createElement('div');
     slides.id = 'slide_' + i;
-    slides.className = 'mySlidesUMich';
-    document.getElementById('overlayUMich').appendChild(slides);
+    slides.className = 'mySlidesSchubert';
+    document.getElementById('overlaySchubert').appendChild(slides);
 
 	// dots that can be used to navigate pages
     var navDots = document.createElement('span');
-    navDots.className = 'dotUMich';
+    navDots.className = 'dotSchubert';
     navDots.onclick = function() {currentSlide(i)};
     dotContainer.appendChild(navDots);
 
 	// displays page info above dots
     var dotHover = document.createElement('span');
-    dotHover.className = 'dotHoverUMich';
+    dotHover.className = 'dotHoverSchubert';
     dotHover.innerHTML = 'Page ' + i;
     navDots.appendChild(dotHover);
 
@@ -154,7 +154,7 @@ function addElements(imageSrc, startPg, endPg, currPg) {
   }
   activeTab = document.getElementsByClassName('stream active')[0].innerHTML;
   activeApp = document.getElementsByClassName('reader_header_title')[0].innerHTML;
-  pageNumber = document.getElementById('numbertextUMich');
+  pageNumber = document.getElementById('numbertextSchubert');
   zoomLevel = 0;
   imageLoaded = true;
   slideIndex = parseInt(currPg, 10);
@@ -179,7 +179,7 @@ function overlayOff() {
   // resets the zoom state of the current page displayed
   element.setAttribute('style', 'width:100%');
   zoomLevel = 0;
-  document.getElementById('overlayUMich').style.display = 'none';
+  document.getElementById('overlaySchubert').style.display = 'none';
   hideTooltip();
 }
 
@@ -202,13 +202,13 @@ function toggleZoom(mouseButton) {
 // displays tooltip. Should disappear after 10 seconds or upon any input from the user
 function displayTooltip() {
   var tooltip = document.createElement('div');
-  tooltip.id = 'tooltipUMich';
+  tooltip.id = 'tooltipSchubert';
   tooltip.innerHTML = tooltipText;
   tooltip.style.display = 'block';
-  document.getElementById('overlayUMich').appendChild(tooltip);
+  document.getElementById('overlaySchubert').appendChild(tooltip);
   // automatically hides tooltip after 15 seconds
   clearTimeout(tooltipTimer);
-  tooltipTimer = setTimeout(function() {if (document.getElementById('tooltipUMich') == null) {return;} else {tooltip.parentNode.removeChild(tooltip)}}, 15000);
+  tooltipTimer = setTimeout(function() {if (document.getElementById('tooltipSchubert') == null) {return;} else {tooltip.parentNode.removeChild(tooltip)}}, 15000);
   overlay.style.display = 'block';
   overlay.focus();
 }
@@ -235,7 +235,7 @@ const tooltipText =
 
 // HTML element for the tooltip destroyed after each instance to prevent clutter
 function hideTooltip() {
-  var tooltip = document.getElementById('tooltipUMich');
+  var tooltip = document.getElementById('tooltipSchubert');
   clearTimeout(tooltipTimer);
   if (tooltip != null) {
     tooltip.parentNode.removeChild(tooltip);
@@ -244,24 +244,24 @@ function hideTooltip() {
 
 // needed to reset the timer and prevent the dot from appearing again too soon
 var timeoutHandle = setTimeout(function() {
-  if (document.getElementById('dotContainerUMich') == null) {
+  if (document.getElementById('dotContainerSchubert') == null) {
     return;
   } else {
-    document.getElementById('dotContainerUMich').style.display = 'block';
-    document.getElementById('studentUMich').style.display = 'block';
+    document.getElementById('dotContainerSchubert').style.display = 'block';
+    document.getElementById('studentSchubert').style.display = 'block';
     pageNumber.style.display = 'block'
   }
 }, 500);
 
 function hideElements() {
-  document.getElementById('dotContainerUMich').style.display = 'none';
-  document.getElementById('studentUMich').style.display = 'none';
+  document.getElementById('dotContainerSchubert').style.display = 'none';
+  document.getElementById('studentSchubert').style.display = 'none';
   pageNumber.style.display = 'none';
   clearTimeout(timeoutHandle);
   timeoutHandle = setTimeout(function() {
-    if (document.getElementById('dotContainerUMich') == null);
-      document.getElementById('dotContainerUMich').style.display = 'block';
-      document.getElementById('studentUMich').style.display = 'block';
+    if (document.getElementById('dotContainerSchubert') == null);
+      document.getElementById('dotContainerSchubert').style.display = 'block';
+      document.getElementById('studentSchubert').style.display = 'block';
       pageNumber.style.display = 'block';
   }, 500)
 }
@@ -283,17 +283,17 @@ function currentSlide(n) {
 // adopted from slideshow turorial in W3C
 function showSlides(n) {
   var i;
-  var slides = document.getElementsByClassName('mySlidesUMich');
-  var dots = document.getElementsByClassName("dotUMich");
+  var slides = document.getElementsByClassName('mySlidesSchubert');
+  var dots = document.getElementsByClassName("dotSchubert");
   if (n > slides.length) {slideIndex = 1}
   if (n < 1) {slideIndex = slides.length}
   for (i = 0; i < slides.length; i++) {
     slides[i].style.display = 'none';
   }
   for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(' activeUMich', '');
+      dots[i].className = dots[i].className.replace(' activeSchubert', '');
   }
   slides[slideIndex-1].style.display = 'block';
-  dots[slideIndex-1].className += ' activeUMich';
+  dots[slideIndex-1].className += ' activeSchubert';
   pageNumber.innerHTML = pageNumber.innerHTML.replace(/^[^\d]*(\d+)/, 'Page ' + slideIndex);
 }

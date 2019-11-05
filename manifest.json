@@ -1,13 +1,20 @@
 {
+  "manifest_version": 2,
+
   "name": "Schubert",
   "version": "0.1",
+
+  "default_locale": "en",
   "description": "Does stuff on Slate",
-  "permissions": ["activeTab", "declarativeContent", "storage"],
-  "options_page": "options.html",
-  "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+
+  "icons": {
+    "16": "images/get_started16.png",
+    "32": "images/get_started32.png",
+    "48": "images/get_started48.png",
+    "128": "images/get_started128.png"
   },
+
+  "browser_action": {...},
   "page_action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -17,11 +24,11 @@
       "128": "images/get_started128.png"
     }
   },
-  "icons": {
-    "16": "images/get_started16.png",
-    "32": "images/get_started32.png",
-    "48": "images/get_started48.png",
-    "128": "images/get_started128.png"
-  },
-  "manifest_version": 2
+  
+  "permissions": ["activeTab", "declarativeContent", "storage"],
+  "options_page": "options.html",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  }
 }
