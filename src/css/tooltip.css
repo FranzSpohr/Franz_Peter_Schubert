@@ -1,0 +1,55 @@
+ #tooltipSchubert {
+    border-radius: 25px;
+    border: 2px solid rgba(0, 39, 76, .975);
+    position: fixed;
+    width: 380px;
+    height: 450px;
+    top: 1.0%;
+    right: 1.5%;
+    font-size: 15px;
+    color: white;
+    background-color: rgba(0, 39, 76, .975);
+    text-align: justify;
+    padding: 16px 30px;
+    cursor: auto;
+  }
+
+ #opentooltipSchubert {
+    border-radius:  10px;
+    border: 1px solid rgba(0, 39, 76, .75);
+    color: white;
+    font-size: 15px;
+    padding: 6px 10px;
+    position: fixed;
+    top: 1%;
+    right: 3.5%;
+    background-color: rgba(0, 39, 76, .75);
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+/*
+* CSS for pop-up tooltip. Table is used to format the tutorial text.
+*/
+#tableSchubert {
+  margin-left: 3%;
+  table-layout: fixed;
+  width: 85%;
+}
+
+.cellKeySchubert{
+  text-align: left;
+  word-wrap: break-word;
+  color: #ffcb05;
+  font-weight: bold;
+  width: 155px;
+}
+
+.cellNavSchubert{
+  text-align: left;
+  width: 300px;
+}
+
+.cellBlankSchubert{
+  height: 15px;
+}
