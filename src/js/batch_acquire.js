@@ -11,6 +11,8 @@
 // @grant        none
 // ==/UserScript==
 
+// need to fix how "-" is not able to be entered since it is bound to the zoom function
+
 // stores current zoom level
 var zoomCount = 0;
 // stores whether event listeners were added
