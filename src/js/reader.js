@@ -19,7 +19,7 @@ var pageNumber; // stores the element containing page numbers
 // creates an overlay that serves as a canvas for all elements created by this userscript
 var overlay = document.createElement('div');
 overlay.id = 'overlaySchubert';
-overlay.onclick = function() {toggleZoom('left')};
+overlay.ondblclick = function() {toggleZoom('left')};
 overlay.oncontextmenu = function() {toggleZoom('right')};
 document.body.appendChild(overlay);
 overlay.addEventListener('keydown', key_handler, true);
