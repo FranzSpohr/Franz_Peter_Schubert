@@ -6,7 +6,7 @@
  * @copyright 2015 asvd <heliosframework@gmail.com> 
  */
 
- // literally just copy pasted code from asvd's dragscroll library. Div overlayUMmich is assigned ID of dragscroll
+ // literally just copy pasted code from asvd's dragscroll library. Div overlaySchubert is assigned ID of dragscroll
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
       define(['exports'], factory);

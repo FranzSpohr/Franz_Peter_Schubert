@@ -8,13 +8,13 @@
 // @updateURL    //https://github.com/FranzSpohr/Slate_Tools/blob/master/reader_zoom.user.js
 // ==/UserScript==
 
-var zoomLevel = 0;  // zoom level of a page
-var slideIndex = 1; // which page to display in viewer
-var imageLoaded = false; // toggled when higher DPI images are loaded
-var activeTab; // Slate tab that the images were loaded from
-var activeApp // app currently being displayed
-var tooltipTimer; // for the timer that times out the tooltip after 15 seconds
-var pageNumber; // stores the element containing page numbers
+var zoomLevel = 0;        // zoom level of a page
+var slideIndex = 1;       // which page to display in viewer
+var imageLoaded = false;  // toggled when higher DPI images are loaded
+var activeTab;            // Slate tab that the images were loaded from
+var activeApp             // app currently being displayed
+var tooltipTimer;         // for the timer that times out the tooltip after 15 seconds
+var pageNumber;           // stores the element containing page numbers
 
 // creates an overlay that serves as a canvas for all elements created by this userscript
 var overlay = document.createElement('div');
@@ -25,8 +25,8 @@ document.body.appendChild(overlay);
 overlay.addEventListener('keydown', key_handler, true);
 overlay.addEventListener('wheel', hideElements, {passive: false});
 overlay.addEventListener('wheel', hideTooltip, {passive: false});
-overlay.className = 'dragscroll'; // enables scrolling by mouse drag
-overlay.tabIndex = -1; // enables keyboard controls by setting focus on the overlay
+overlay.className = 'dragscroll';     // enables scrolling by mouse drag
+overlay.tabIndex = -1;                // enables keyboard controls by setting focus on the overlay
 
 // injects button into the footer of Slate Reader. clicking it will open the viewer.
 var input = document.createElement('input');
@@ -63,10 +63,10 @@ function overlayOn() {
       addElements(imageLink, startPage, endPage, currentPage);
       displayTooltip();
     } else {
-      slideIndex = parseInt(currentPage, 10); // for whatever reason, parseInt is required to convert the slindeIndex into an integer
+      slideIndex = parseInt(currentPage, 10);     // for whatever reason, parseInt is required to convert the slindeIndex into an integer
       showSlides(slideIndex);
       displayTooltip();
-      overlay.scrollTo(0,0); // return to top of the page
+      overlay.scrollTo(0,0);                      // return to top of the page
       return;
     }
   } else {
@@ -77,10 +77,10 @@ function overlayOn() {
 
 // adds HTML elements needed for the userscript to function
 function addElements(imageSrc, startPg, endPg, currPg) {
-  var iframeUM = document.getElementsByTagName('iframe')[0].contentWindow.document.body; // iframe declared to access student info
-  var table = iframeUM.getElementsByClassName('grey')[0]; // declares table containing UMID
-  var appName = iframeUM.getElementsByClassName('fullname')[0].innerHTML; // student name
-  var appID = table.rows[1].cells[0].innerHTML + " " + table.rows[1].cells[1].innerHTML; // student UMID
+  var iframeUM = document.getElementsByTagName('iframe')[0].contentWindow.document.body;  // iframe declared to access student info
+  var table = iframeUM.getElementsByClassName('grey')[0];                                 // declares table containing UMID
+  var appName = iframeUM.getElementsByClassName('fullname')[0].innerHTML;                 // student name
+  var appID = table.rows[1].cells[0].innerHTML + " " + table.rows[1].cells[1].innerHTML;  // student UMID
 
   var studentInfo = document.createElement('div');
   studentInfo.id = 'studentSchubert';
@@ -94,7 +94,7 @@ function addElements(imageSrc, startPg, endPg, currPg) {
   openTooltip.onclick = displayTooltip;
   document.getElementById('overlaySchubert').appendChild(openTooltip);
 
-  // page counter on the upper right corner, does not need to be looped?
+  // page counter on the upper right corner, does not need to be looped? Fixed 
   var pgCounter = document.createElement('div');
   pgCounter.id = 'numbertextSchubert';
   pgCounter.innerHTML = 'Page ' + currPg + ' of ' + endPg;
