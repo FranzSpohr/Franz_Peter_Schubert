@@ -3,26 +3,26 @@
 
   "name": "Schubert",
   "version": "0.1",
+  "author": "Theodore H. Ma",
 
-  "default_locale": "en",
-  "description": "Does stuff on Slate",
+  "description": "It does stuff on Slate.",
 
   "icons": {
-    "16": "images/get_started16.png",
-    "32": "images/get_started32.png",
-    "48": "images/get_started48.png",
-    "128": "images/get_started128.png"
+    "16": "src/img/schubert_16.png",
+    "32": "src/img/schubert_32.png",
+    "48": "src/img/schubert_48.png",
+    "128": "src/img/schubert_128.png"
   },
-  
-  "browser_action": {...},
+
   "page_action": {
-    "default_popup": "popup.html",
     "default_icon": {
-      "16": "images/get_started16.png",
-      "32": "images/get_started32.png",
-      "48": "images/get_started48.png",
-      "128": "images/get_started128.png"
-    }
+      "16": "src/img/schubert_16.png",
+      "32": "src/img/schubert_32.png",
+      "48": "src/img/schubert_48.png",
+      "128": "src/img/schubert_128.png"
+    },
+    "default_title": "Slate n Things",
+    "default_popup": "popup.html"
   },
 
   "permissions": ["activeTab", "declarativeContent", "storage"],
@@ -30,5 +30,18 @@
   "background": {
     "scripts": ["background.js"],
     "persistent": false
-  }
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["https://*/manage/database/acquire", "https://*/manage/lookup/*", "https://*/manage/inbox/*"],
+      "exclude_matches": ["*://*/*business*"],
+      "js": ["batch_zoom.js"]
+    },
+    {
+      "matches": ["https://*/manage/reader/*"],
+      "exclude_matches": ["*://*/*business*"],
+      "js": ["reader_zoom.js"]
+    }
+]
 }

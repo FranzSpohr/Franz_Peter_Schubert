@@ -1,13 +1,3 @@
-// ==UserScript==
-// @name         Slate Reader Zoom
-// @namespace    https://umich.edu/
-// @version      11.1.19
-// @description  For Slate Reader. Opens a page with a highder DPI render of document. Needs Tampermonkey for Chrome or Greasemonkey for Firefox.
-// @author       University of Michigan OUA Processing (Theodore Ma)
-// @match        https://*/manage/reader/*
-// @updateURL    //https://github.com/FranzSpohr/Slate_Tools/blob/master/reader_zoom.user.js
-// ==/UserScript==
-
 var zoomLevel = 0;        // zoom level of a page
 var slideIndex = 1;       // which page to display in viewer
 var imageLoaded = false;  // toggled when higher DPI images are loaded
