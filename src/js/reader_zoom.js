@@ -1,3 +1,10 @@
+var jq = $.noConflict();
+jq(document).ready(function () {
+  jq("button").click(function () {
+    jq("p").text("jQuery is still working!");
+  });
+});
+
 var zoomLevel = 0;        // zoom level of a page
 var slideIndex = 1;       // which page to display in viewer
 var imageLoaded = false;  // toggled when higher DPI images are loaded
@@ -204,24 +211,7 @@ function displayTooltip() {
 }
 
 // texts for tooltip
-const tooltipText =
-      "<p>Navigate between pages by<strong><font color='#ffcb05'>&nbsp;left clicking on arrows</font></strong><br>at the edges of the screen.</p>" +
-      "<p><strong><font color='#ffcb05'>Left click on the dots&nbsp;</font></strong>near the bottom of the screen<br>to jump between pages.</p>" +
-      "<table id='tableUMich'>" +
-      "<tr><td style='width:20px'><li></li></td><td class='cellKeyUMich'>Esc Key:</td><td class='cellNavUMich'>Return to Reader</td></tr>" +
-      "<tr class='cellBlankUMich'><td colspan='3'></td></tr>" +
-      "<tr><td style='width:20px'><li></li></td><td class='cellKeyUMich'>Left Click:</td><td class='cellNavUMich'>Zoom in</td></tr>" +
-      "<tr><td style='width:20px'><li></li></td><td class='cellKeyUMich'>Left Click &<br> Mouse Drag:</td><td class='cellNavUMich'>Scroll document</td></tr>" +
-      "<tr class='cellBlankUMich'><td colspan='3'></td></tr>" +
-      "<tr><td style='width:20px'><li></li></td><td class='cellKeyUMich'>Right Click:</td><td class='cellNavUMich'>Zoom out</td></tr>" +
-      "<tr><td style='width:20px'><li></li></td><td class='cellKeyUMich'>Right Click:<br><font size='1'>(if on default zoom level)</font></td><td class='cellNavUMich'>Return to Reader</td></tr>" +
-      "<tr class='cellBlankUMich'><td colspan='3'></td></tr>" +
-      "<tr><td style='width:20px'><li></li></td><td class='cellKeyUMich'>Up Arrow Key:</td><td class='cellNavUMich'>Scroll up</td></tr>" +
-      "<tr></tr><td style='width:20px'><li></li></td><td class='cellKeyUMich'>Down Arrow Key:</td><td class='cellNavUMich'>Scroll down</td></tr>" +
-      "<tr><td style='width:20px'><li></li></td><td class='cellKeyUMich'>Left Arrow Key:</td><td class='cellNavUMich'>Previous page</td></tr>" +
-      "<tr><td style='width:20px'><li></li></td><td class='cellKeyUMich'>Right Arrow Key:</td><td class='cellNavUMich'>Next page</td></tr>" +
-      "</table>" +
-      "<p>If you encounter issues or have any suggestions or<br>requests, contact Teddy Ma at <a style='color: #ffcb05' href='mailto:tedma@umich.edu'>tedma@umich.edu</a>.</b></p>"
+const tooltipText = document.getElementById("tooltipSchubert").innerHTML = '<object type="text/html" data="reader_tooltip.html" ></object>';
 
 // HTML element for the tooltip destroyed after each instance to prevent clutter
 function hideTooltip() {
