@@ -200,7 +200,6 @@ function toggleZoom(mouseButton) {
 function displayTooltip() {
   var tooltip = document.createElement('div');
   tooltip.id = 'tooltipSchubert';
-  tooltip.innerHTML = tooltipText;
   tooltip.style.display = 'block';
   document.getElementById('overlaySchubert').appendChild(tooltip);
   // automatically hides tooltip after 15 seconds
