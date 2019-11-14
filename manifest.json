@@ -40,12 +40,12 @@
 
   "content_scripts": [{
       "matches": ["https://*/manage/database/acquire", "https://*/manage/lookup/*", "https://*/manage/inbox/*"],
-      "js": ["src/js/jQuery/jquery-3.4.1.min.js", "src/js/batch_zoom.js", "src/js/dragscroll/dragscroll.js"]
+      "js": ["src/js/batch_zoom.js", "src/js/dragscroll/dragscroll.js"]
     },
     {
       "matches": ["https://*/manage/reader/*"],
       "css": ["src/css/reader.css", "src/css/tooltip.css"],
-      "js": ["src/js/jQuery/jquery-3.4.1.min.js", "src/js/reader_zoom.js", "src/js/dragscroll/dragscroll.js"]
+      "js": ["src/js/reader_zoom.js", "src/js/dragscroll/dragscroll.js"]
     }
   ]
 }

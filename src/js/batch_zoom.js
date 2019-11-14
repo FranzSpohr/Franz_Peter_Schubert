@@ -1,10 +1,3 @@
-var jq = $.noConflict();
-jq(document).ready(function () {
-  jq("button").click(function () {
-    jq("p").text("jQuery is still working!");
-  });
-});
-
 // stores current zoom level
 var zoomCount = 0;
 // stores whether event listeners were added
