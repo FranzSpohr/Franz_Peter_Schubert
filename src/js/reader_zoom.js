@@ -1,10 +1,3 @@
-var jq = $.noConflict();
-jq(document).ready(function () {
-  jq("button").click(function () {
-    jq("p").text("jQuery is still working!");
-  });
-});
-
 var zoomLevel = 0;        // zoom level of a page
 var slideIndex = 1;       // which page to display in viewer
 var imageLoaded = false;  // toggled when higher DPI images are loaded
