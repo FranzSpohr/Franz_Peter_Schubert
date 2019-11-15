@@ -194,6 +194,7 @@ function displayTooltip() {
   var tooltip = document.createElement('div');
   tooltip.id = 'tooltipSchubert';
   tooltip.style.display = 'block';
+  tooltip.innerHTML = '<iframe src="src/html/reader_tooltip.html" ></iframe>';
   document.getElementById('overlaySchubert').appendChild(tooltip);
   // automatically hides tooltip after 15 seconds
   clearTimeout(tooltipTimer);
@@ -201,9 +202,6 @@ function displayTooltip() {
   overlay.style.display = 'block';
   overlay.focus();
 }
-
-// texts for tooltip
-const tooltipText = document.getElementById("tooltipSchubert").innerHTML = '<object type="text/html" data="reader_tooltip.html" ></object>';
 
 // HTML element for the tooltip destroyed after each instance to prevent clutter
 function hideTooltip() {

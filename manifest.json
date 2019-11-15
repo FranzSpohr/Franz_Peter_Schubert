@@ -1,32 +1,38 @@
 {
   "manifest_version": 2,
-
   "name": "Schubert",
   "version": "0.1",
   "author": "Theodore H. Ma",
-
   "description": "It does stuff on Slate.",
-
-  "permissions": ["activeTab", "tabs", "declarativeContent", "storage", "alarms", "contextMenus", "debugger", "desktopCapture", "notifications", "printerProvider"],
-  
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "declarativeContent",
+    "storage",
+    "alarms",
+    "contextMenus",
+    "debugger",
+    "desktopCapture",
+    "notifications",
+    "printerProvider"
+  ],
   "options_page": "src/html/options.html",
   "options_ui": {
     "page": "src/html/options.html",
     "open_in_tab": false
   },
-
   "background": {
-    "scripts": ["src/js/background.js"],
+    "scripts": [
+      "src/js/background.js"
+    ],
     "persistent": false
   },
-
   "icons": {
     "16": "src/img/schubert_16.png",
     "32": "src/img/schubert_32.png",
     "48": "src/img/schubert_48.png",
     "128": "src/img/schubert_128.png"
   },
-
   "page_action": {
     "default_icon": {
       "16": "src/img/schubert_16.png",
@@ -37,15 +43,32 @@
     "default_title": "Slate n Things",
     "default_popup": "src/html/popup.html"
   },
-
-  "content_scripts": [{
-      "matches": ["https://*/manage/database/acquire", "https://*/manage/lookup/*", "https://*/manage/inbox/*"],
-      "js": ["src/js/batch_zoom.js", "src/js/dragscroll/dragscroll.js"]
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/manage/database/acquire",
+        "https://*/manage/lookup/*",
+        "https://*/manage/inbox/*"
+      ],
+      "js": [
+        "src/js/vue/vue.js",
+        "src/js/batch_zoom.js",
+        "src/js/dragscroll/dragscroll.js"
+      ]
     },
     {
-      "matches": ["https://*/manage/reader/*"],
-      "css": ["src/css/reader.css", "src/css/tooltip.css"],
-      "js": ["src/js/reader_zoom.js", "src/js/dragscroll/dragscroll.js"]
+      "matches": [
+        "https://*/manage/reader/*"
+      ],
+      "css": [
+        "src/css/reader.css",
+        "src/css/tooltip.css"
+      ],
+      "js": [
+        "src/js/vue/vue.js",
+        "src/js/reader_zoom.js",
+        "src/js/dragscroll/dragscroll.js"
+      ]
     }
   ]
 }
