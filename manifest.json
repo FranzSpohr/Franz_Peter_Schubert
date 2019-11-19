@@ -22,9 +22,7 @@
     "open_in_tab": false
   },
   "background": {
-    "scripts": [
-      "src/js/background.js"
-    ],
+    "scripts": ["src/js/background.js"],
     "persistent": false
   },
   "icons": {
@@ -57,13 +55,8 @@
       ]
     },
     {
-      "matches": [
-        "https://*/manage/reader/*"
-      ],
-      "css": [
-        "src/css/reader.css",
-        "src/css/tooltip.css"
-      ],
+      "matches": ["https://*/manage/reader/*"],
+      "css": ["src/css/reader.css", "src/css/tooltip.css"],
       "js": [
         "src/js/vue/vue.js",
         "src/js/reader_zoom.js",

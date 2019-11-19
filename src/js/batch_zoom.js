@@ -1,6 +1,6 @@
 var zoomCount = 0; // stores current zoom level
-var ListenerAdded = false // stores whether event listeners were added
-var zoom_Levels = [72, 108, 144, 180, 216]; // "z" value that Slate requires to determine size of the document render
+var ListenerAdded = false; // stores whether event listeners were added
+var zoomLevels = [72, 108, 144, 180, 216]; // "z" value that Slate requires to determine size of the document render
 
 const parentElement = window.document;
 const mutationConfig = {
@@ -8,50 +8,58 @@ const mutationConfig = {
   childList: true,
   subtree: true,
   characterData: true,
-  characterDataOldValue: true
+  characterDataOldValue: true,
+  attributeFilter: ['id', 'style', 'class']
 };
 
 var onMutate = () => {
-  if (document.getElementById('batch_pages') !== null && ListenerAdded == false) {
+  if (
+    document.getElementById('batch_pages') !== null &&
+    ListenerAdded == false
+  ) {
     var docWindow = document.getElementById('batch_pages');
-    docWindow.addEventListener('load', add_Listener, true);
+    docWindow.addEventListener('load', addListener, true);
   }
 };
 
 var observer = new MutationObserver(onMutate);
 observer.observe(parentElement.body, mutationConfig);
 
-parentElement.addEventListener('keypress', batchZoom, true)
+parentElement.addEventListener('keypress', batchZoom, true);
 
 // adds event listeners needed for userscript to function
-function add_Listener() {
+function addListener() {
   if (ListenerAdded) {
     return;
   } else {
     // grabs images and attaches listeners
     const elements = document.querySelectorAll('.batch_page_container > img');
     elements.forEach(el => {
-      el.addEventListener('click', batchZoom, true)
-      el.addEventListener('contextmenu', batchZoom, true)
+      el.addEventListener('click', batchZoom, true);
+      el.addEventListener('contextmenu', batchZoom, true);
     });
     // needed to determine whether "next" buttons, etc. are pressed, meaning listeners have to be attached again
     const buttons = document.querySelectorAll('button[type="button"]');
     buttons.forEach(el => {
       el.addEventListener('click', () => {
-        zoomCount = 0
-        ListenerAdded = false
-      })
+        zoomCount = 0;
+        ListenerAdded = false;
+      });
     });
-    ListenerAdded = true
+    ListenerAdded = true;
   }
 }
 
 // toggles between zoom levels
 function batchZoom(event) {
   if (parentElement.activeElement.nodeName == 'INPUT') {
-    return
+    return;
   } else {
-    if (event.code == 'NumpadAdd' || event.code == 'Equal' || event.type == 'click') {
+    if (
+      event.code == 'NumpadAdd' ||
+      event.code == 'Equal' ||
+      event.type == 'click'
+    ) {
       event.preventDefault();
       if (zoomCount == 4) {
         hideZoomer();
@@ -62,21 +70,31 @@ function batchZoom(event) {
 
       // replaces the existing "z" value in the URL of documents
       elements.forEach(el => {
-        if (el.src.includes(`z=${zoom_Levels[zoomCount]}`)) {
-          el.src = el.src.replace(`z=${zoom_Levels[zoomCount]}`, `z=${zoom_Levels[zoomCount + 1]}`);
+        if (el.src.includes(`z=${zoomLevels[zoomCount]}`)) {
+          el.src = el.src.replace(
+            `z=${zoomLevels[zoomCount]}`,
+            `z=${zoomLevels[zoomCount + 1]}`
+          );
         }
       });
       zoomCount++;
       hideZoomer();
-    } else if (event.code == 'NumpadSubtract' || event.code == 'Minus' || event.type == 'contextmenu') {
+    } else if (
+      event.code == 'NumpadSubtract' ||
+      event.code == 'Minus' ||
+      event.type == 'contextmenu'
+    ) {
       event.preventDefault();
       if (zoomCount == 0) {
-        return
-      };
+        return;
+      }
       const elements = document.querySelectorAll('.batch_page_container > img');
       elements.forEach(el => {
-        if (el.src.includes(`z=${zoom_Levels[zoomCount]}`)) {
-          el.src = el.src.replace(`z=${zoom_Levels[zoomCount]}`, `z=${zoom_Levels[zoomCount - 1]}`);
+        if (el.src.includes(`z=${zoomLevels[zoomCount]}`)) {
+          el.src = el.src.replace(
+            `z=${zoomLevels[zoomCount]}`,
+            `z=${zoomLevels[zoomCount - 1]}`
+          );
         }
       });
       zoomCount--;
@@ -88,6 +106,6 @@ function batchZoom(event) {
 function hideZoomer() {
   var targetNode = document.getElementsByClassName('batch_zoomer boxshadow')[0];
   if (targetNode) {
-    targetNode.parentNode.removeChild(targetNode)
+    targetNode.parentNode.removeChild(targetNode);
   }
 }
