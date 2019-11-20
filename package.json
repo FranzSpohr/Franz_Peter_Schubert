@@ -1,7 +1,7 @@
 {
   "name": "schubert",
   "version": "1.0.0",
-  "description": "Does Slate stuff.",
+  "description": "It does stuff on Slate.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
