@@ -44,7 +44,7 @@
 * container for images
 */
 .mySlidesSchubert {
-  display: none
+  display: none;
 }
 
 /*
@@ -89,7 +89,7 @@
 #numbertextSchubert {
   text-align: center;
   border-radius: 10px;
-  border: 1px solid rgba(0, 39, 76, .75);
+  border: 1px solid rgba(0, 39, 76, 0.75);
   color: white;
   font-size: 15px;
   width: 100px;
@@ -98,7 +98,7 @@
   left: 50%;
   margin: 0 25% 0 0;
   top: 3%;
-  background-color: rgba(0, 39, 76, .75);
+  background-color: rgba(0, 39, 76, 0.75);
   cursor: pointer;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -109,14 +109,14 @@
 */
 #studentSchubert {
   border-radius: 10px;
-  border: 1px solid rgba(0, 39, 76, .75);
+  border: 1px solid rgba(0, 39, 76, 0.75);
   color: white;
   font-size: 15px;
   padding: 6px 10px;
   position: fixed;
   top: 1%;
   left: 5px;
-  background-color: rgba(0, 39, 76, .75);
+  background-color: rgba(0, 39, 76, 0.75);
   cursor: pointer;
 }
 
@@ -163,14 +163,14 @@
   bottom: 150%;
   left: 50%;
   opacity: 0;
-  transition: opacity .5s;
+  transition: opacity 0.5s;
   margin-left: inherit;
   -webkit-transform: translate(-50%, 0%);
   transform: translate(-50%, 0%);
 }
 
 .dotSchubert .dotHoverSchubert:after {
-  content: " ";
+  content: ' ';
   position: absolute;
   top: 100%;
   left: 50%;

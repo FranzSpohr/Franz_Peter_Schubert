@@ -2,7 +2,7 @@ var zoomLevel = 0; // zoom level of a page
 var slideIndex = 1; // which page to display in viewer
 var imageLoaded = false; // toggled when higher DPI images are loaded
 var activeTab; // Slate tab that the images were loaded from
-var activeApp; // app currently being displayed
+var activeAppl; // app currently being displayed
 var tooltipTimer; // for the timer that times out the tooltip after 15 seconds
 var pageNumber; // stores the element containing page numbers
 
@@ -22,7 +22,7 @@ const mutationConfig = {
   subtree: true,
   characterData: true,
   characterDataOldValue: true,
-  attributeFilter: ['class']
+  attributeFilter: ['class'],
 };
 
 var onMutate = () => {
@@ -49,10 +49,10 @@ overlay.oncontextmenu = () => readerZoom('rightClick');
 document.body.appendChild(overlay);
 overlay.addEventListener('keydown', key_handler, true);
 overlay.addEventListener('wheel', hideElements, {
-  passive: false
+  passive: false,
 });
 overlay.addEventListener('wheel', hideTooltip, {
-  passive: false
+  passive: false,
 });
 overlay.className = 'dragscroll'; // enables scrolling by mouse drag
 overlay.tabIndex = -1; // enables keyboard controls by setting focus on the overla
@@ -83,7 +83,7 @@ function overlayOn() {
 
   if (imageLoaded) {
     // determines whether the Slate tab or student being displayed has changed. If changed, deletes existing HTML elements and creates new ones
-    if (activeTab !== targetTab || activeApp !== targetApp) {
+    if (activeTab !== targetTab || activeAppl !== targetApp) {
       while (overlay.firstChild) {
         // necessary to prevent unused HTML elements from cluttering the page
         overlay.removeChild(overlay.firstChild);
@@ -186,7 +186,7 @@ function addElements(imageSrc, startPg, endPg, currPg) {
     document.getElementById('slide_' + i).appendChild(imageElement);
   }
   activeTab = document.getElementsByClassName('stream active')[0].innerHTML;
-  activeApp = document.getElementsByClassName('reader_header_title')[0]
+  activeAppl = document.getElementsByClassName('reader_header_title')[0]
     .innerHTML;
   pageNumber = document.getElementById('numbertextSchubert');
   zoomLevel = 0;
