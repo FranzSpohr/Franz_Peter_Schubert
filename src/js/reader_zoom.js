@@ -1,13 +1,13 @@
-var zoomLevel = 0; // zoom level of a page
-var slideIndex = 1; // which page to display in viewer
-var imageLoaded = false; // toggled when higher DPI images are loaded
-var activeTab; // Slate tab that the images were loaded from
-var activeAppl; // app currently being displayed
-var tooltipTimer; // for the timer that times out the tooltip after 15 seconds
-var pageNumber; // stores the element containing page numbers
+let zoomLevel = 0; // zoom level of a page
+let slideIndex = 1; // which page to display in viewer
+let imageLoaded = false; // toggled when higher DPI images are loaded
+let activeTab; // Slate tab that the images were loaded from
+let activeAppl; // app currently being displayed
+let tooltipTimer; // for the timer that times out the tooltip after 15 seconds
+let pageNumber; // stores the element containing page numbers
 
 // injects button into the footer of Slate Reader. clicking it will open the viewer.
-var buttonShow = document.createElement('input');
+const buttonShow = document.createElement('input');
 buttonShow.type = 'button';
 buttonShow.id = 'buttonSchubert';
 buttonShow.value = 'Display Larger Images';
@@ -15,17 +15,7 @@ buttonShow.disabled = true;
 buttonShow.onclick = overlayOn;
 document.getElementsByClassName('reader_footer')[0].appendChild(buttonShow);
 
-const parentElement = window.document;
-const mutationConfig = {
-  attributes: true,
-  childList: true,
-  subtree: true,
-  characterData: true,
-  characterDataOldValue: true,
-  attributeFilter: ['class'],
-};
-
-var onMutate = () => {
+function onMutate(mutations) {
   if (
     document.querySelector(
       'body > div.reader_viewer.reader_scrollable > div > div.container.active.loaded > div > img'
@@ -36,18 +26,21 @@ var onMutate = () => {
   } else {
     buttonShow.disabled = true;
   }
-};
+}
 
-var observer = new MutationObserver(onMutate);
-observer.observe(parentElement.body, mutationConfig);
+let observer = new MutationObserver(onMutate);
+observer.observe(
+  document.getElementsByClassName('viewport')[0],
+  mutationConfig
+);
 
 // creates an overlay that serves as a canvas for all elements created by this userscript
-var overlay = document.createElement('div');
+const overlay = document.createElement('div');
 overlay.id = 'overlaySchubert';
 overlay.ondblclick = () => readerZoom('leftClick');
 overlay.oncontextmenu = () => readerZoom('rightClick');
 document.body.appendChild(overlay);
-overlay.addEventListener('keydown', key_handler, true);
+overlay.addEventListener('keydown', keyHandler, true);
 overlay.addEventListener('wheel', hideElements, {
   passive: false,
 });
@@ -68,18 +61,18 @@ function overlayOn() {
     return;
   }
   // uses regular expressions to extract data needed to determine the number of needed new HTML elements
-  var startPage = 1;
-  var currentPage = document
+  let startPage = 1;
+  let currentPage = document
     .getElementsByClassName('reader_status')[0]
     .childNodes[0].textContent.match(/\d+/);
-  var endPage = document
+  let endPage = document
     .getElementsByClassName('reader_status')[0]
     .childNodes[0].textContent.match(/\d+(?=,)/);
 
   // determines which Slate tab is currently being displayed
-  var targetApp = document.getElementsByClassName('reader_header_title')[0]
+  let targetApp = document.getElementsByClassName('reader_header_title')[0]
     .innerHTML;
-  var targetTab = document.getElementsByClassName('stream active')[0].innerHTML;
+  let targetTab = document.getElementsByClassName('stream active')[0].innerHTML;
 
   if (imageLoaded) {
     // determines whether the Slate tab or student being displayed has changed. If changed, deletes existing HTML elements and creates new ones
@@ -105,73 +98,73 @@ function overlayOn() {
 
 // adds HTML elements needed for the userscript to function
 function addElements(imageSrc, startPg, endPg, currPg) {
-  var iframeUM = document.getElementsByTagName('iframe')[0].contentWindow
+  const iframeUM = document.getElementsByTagName('iframe')[0].contentWindow
     .document.body; // iframe declared to access student info
-  var table = iframeUM.getElementsByClassName('grey')[0]; // declares table containing UMID
-  var appName = iframeUM.getElementsByClassName('fullname')[0].innerHTML; // student name
-  var appID =
+  let table = iframeUM.getElementsByClassName('grey')[0]; // declares table containing UMID
+  let appName = iframeUM.getElementsByClassName('fullname')[0].innerHTML; // student name
+  let appID =
     table.rows[1].cells[0].innerHTML + ' ' + table.rows[1].cells[1].innerHTML; // student UMID
 
-  var studentInfo = document.createElement('div');
+  const studentInfo = document.createElement('div');
   studentInfo.id = 'studentSchubert';
   studentInfo.innerHTML = appName + '<br>' + appID;
   studentInfo.onclick = overlayOff;
   document.getElementById('overlaySchubert').appendChild(studentInfo);
 
-  var openTooltip = document.createElement('div');
+  const openTooltip = document.createElement('div');
   openTooltip.id = 'opentooltipSchubert';
   openTooltip.innerHTML = '?';
   openTooltip.onclick = displayTooltip;
   document.getElementById('overlaySchubert').appendChild(openTooltip);
 
   // page counter on the upper right corner, does not need to be looped? Fixed
-  var pgCounter = document.createElement('div');
+  const pgCounter = document.createElement('div');
   pgCounter.id = 'numbertextSchubert';
   pgCounter.innerHTML = 'Page ' + currPg + ' of ' + endPg;
   pgCounter.onclick = overlayOff;
   document.getElementById('overlaySchubert').appendChild(pgCounter);
 
   // creates anchor elements on the edges of the screen for switching between pages
-  var forward = document.createElement('a');
+  const forward = document.createElement('a');
   forward.className = 'nextSchubert';
   forward.onclick = () => plusSlides(1);
   forward.innerHTML = '&#10095';
   document.getElementById('overlaySchubert').appendChild(forward);
 
   // creates anchor elements on the edges of the screen for switching between pages
-  var backward = document.createElement('a');
+  const backward = document.createElement('a');
   backward.className = 'prevSchubert';
   backward.onclick = () => plusSlides(-1);
   backward.innerHTML = '&#10094';
   document.getElementById('overlaySchubert').appendChild(backward);
 
   // container for the navigation dots
-  var dotContainer = document.createElement('div');
+  const dotContainer = document.createElement('div');
   dotContainer.id = 'dotContainerSchubert';
   document.getElementById('overlaySchubert').appendChild(dotContainer);
 
   for (let i = startPg; i <= endPg; i++) {
     // Contains the images
-    var slides = document.createElement('div');
+    const slides = document.createElement('div');
     slides.id = 'slide_' + i;
     slides.className = 'mySlidesSchubert';
     document.getElementById('overlaySchubert').appendChild(slides);
 
     // dots that can be used to navigate pages
-    var navDots = document.createElement('span');
+    const navDots = document.createElement('span');
     navDots.className = 'dotSchubert';
     navDots.onclick = () => currentSlide(i);
     dotContainer.appendChild(navDots);
 
     // displays page info above dots
-    var dotHover = document.createElement('span');
+    const dotHover = document.createElement('span');
     dotHover.className = 'dotHoverSchubert';
     dotHover.innerHTML = 'Page ' + i;
     navDots.appendChild(dotHover);
 
-    var imageElement = document.createElement('img'); // element for higher DPI images of the documents
-    var imageNewSrc = imageSrc.src.replace(/z=\d*/, 'z=300'); // replaces the part of URL that specifies DPI of the image
-    var errorDPI = 200; // lowers requested DPI if image fails to be loaded
+    const imageElement = document.createElement('img'); // element for higher DPI images of the documents
+    let imageNewSrc = imageSrc.src.replace(/z=\d*/, 'z=300'); // replaces the part of URL that specifies DPI of the image
+    const errorDPI = 200; // lowers requested DPI if image fails to be loaded
 
     // modifies the page number component of the URL to attach correct pages to the slides
     imageNewSrc = imageNewSrc.replace(/pg=\d*/, `pg=${i - 1}`);
@@ -196,7 +189,8 @@ function addElements(imageSrc, startPg, endPg, currPg) {
 }
 
 // handles keyboard inputs
-function key_handler(event) {
+function keyHandler(event) {
+  console.log('still works');
   hideTooltip();
   if (event.code == 'ArrowRight') {
     plusSlides(1);
@@ -215,12 +209,13 @@ function overlayOff() {
   zoomLevel = 0;
   document.getElementById('overlaySchubert').style.display = 'none';
   hideTooltip();
+  document.exitFullscreen();
 }
 
 // kind of a janky way to change zoom levels of a document by just changing image's width, could use improvement?
 function readerZoom(mouseButton) {
   const element = document.getElementById('image_' + slideIndex);
-  var zLevels = [100, 125, 150];
+  const zLevels = [100, 125, 150];
   hideTooltip();
   if (mouseButton == 'leftClick') {
     zoomLevel++;
@@ -241,10 +236,10 @@ function readerZoom(mouseButton) {
 
 // displays tooltip. Should disappear after 10 seconds or upon any input from the user
 function displayTooltip() {
-  var tooltip = document.createElement('div');
+  const tooltip = document.createElement('div');
   tooltip.id = 'tooltipSchubert';
   tooltip.style.display = 'block';
-  tooltip.innerHTML = '<iframe src="src/html/reader_tooltip.html" ></iframe>';
+  // tooltip.innerHTML = '<iframe src="src/html/reader_tooltip.html" ></iframe>';
   document.getElementById('overlaySchubert').appendChild(tooltip);
   // automatically hides tooltip after 15 seconds
   clearTimeout(tooltipTimer);
@@ -256,12 +251,13 @@ function displayTooltip() {
     }
   }, 15000);
   overlay.style.display = 'block';
+  document.documentElement.requestFullscreen();
   overlay.focus();
 }
 
 // HTML element for the tooltip destroyed after each instance to prevent clutter
 function hideTooltip() {
-  var tooltip = document.getElementById('tooltipSchubert');
+  const tooltip = document.getElementById('tooltipSchubert');
   clearTimeout(tooltipTimer);
   if (tooltip != null) {
     tooltip.parentNode.removeChild(tooltip);
@@ -269,7 +265,7 @@ function hideTooltip() {
 }
 
 // needed to reset the timer and prevent the dot from appearing again too soon
-var timeoutHandle = setTimeout(() => {
+let timeoutHandle = setTimeout(() => {
   if (document.getElementById('dotContainerSchubert') == null) {
     return;
   } else {
@@ -308,9 +304,9 @@ function currentSlide(n) {
 
 // adopted from slideshow turorial in W3C
 function showSlides(n) {
-  var i;
-  var slides = document.getElementsByClassName('mySlidesSchubert');
-  var dots = document.getElementsByClassName('dotSchubert');
+  let i;
+  const slides = document.getElementsByClassName('mySlidesSchubert');
+  const dots = document.getElementsByClassName('dotSchubert');
   if (n > slides.length) {
     slideIndex = 1;
   }
