@@ -50,7 +50,7 @@
       ],
       "js": [
         "src/js/vue/vue.js",
-        "src/js/infoGrabber.js",
+        "src/js/info_Grabber.js",
         "src/js/batch_zoom.js"
       ]
     },
@@ -59,9 +59,9 @@
       "css": ["src/css/reader.css", "src/css/tooltip.css"],
       "js": [
         "src/js/vue/vue.js",
-        "src/js/dragscroll/dragscroll.js",
         "src/js/httpVueLoader.js",
-        "src/js/infoGrabber.js",
+        "src/js/dragscroll/dragscroll.js",
+        "src/js/info_Grabber.js",
         "src/js/reader_zoom.js"
       ]
     }

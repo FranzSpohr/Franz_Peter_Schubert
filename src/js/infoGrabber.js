@@ -1,9 +1,0 @@
-var UMID;
-var slateID;
-var firstName;
-var lastName;
-var fullName;
-var birthDate;
-var applUnit;
-var applTerm;
-var applYear;

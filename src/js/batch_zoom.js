@@ -1,29 +1,18 @@
-var zoomLevel = 0; // stores current zoom level
-var listenerAdded = false; // stores whether event listeners were added
-var zoomValues = [72, 108, 144, 180, 216]; // "z" value that Slate requires to determine size of the document render
+let zoomLevel = 0; // stores current zoom level
+let listenerAdded = false; // stores whether event listeners were added
+let zoomValues = [72, 108, 144, 180, 216]; // "z" value that Slate requires to determine size of the document render
 
-const parentElement = window.document;
-
-const mutationConfig = {
-  attributes: true,
-  childList: true,
-  subtree: true,
-  characterData: true,
-  characterDataOldValue: true,
-  attributeFilter: ['id', 'style', 'class'],
-};
-
-var onMutate = () => {
+let onMutate = () => {
   if (
     document.getElementById('batch_pages') !== null &&
     listenerAdded == false
   ) {
-    var docWindow = document.getElementById('batch_pages');
+    let docWindow = document.getElementById('batch_pages');
     docWindow.addEventListener('load', addListener, true);
   }
 };
 
-var observer = new MutationObserver(onMutate);
+let observer = new MutationObserver(onMutate);
 observer.observe(parentElement.body, mutationConfig);
 
 parentElement.addEventListener('keypress', batchZoom, true);
@@ -38,6 +27,7 @@ function addListener() {
     elements.forEach(el => {
       el.addEventListener('click', batchZoom, true);
       el.addEventListener('contextmenu', batchZoom, true);
+      el.classList.add('dragscroll');
     });
 
     // needed to determine whether "next" buttons, etc. are pressed, meaning listeners have to be attached again
@@ -107,7 +97,7 @@ function batchZoom(event) {
 
 /* kinda janky way to automatically close Slate's useless magnifying glass thingy*/
 function hideZoomer() {
-  var targetNode = document.getElementsByClassName('batch_zoomer boxshadow')[0];
+  let targetNode = document.getElementsByClassName('batch_zoomer boxshadow')[0];
   if (targetNode) {
     targetNode.parentNode.removeChild(targetNode);
   }
