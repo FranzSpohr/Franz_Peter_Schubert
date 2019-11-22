@@ -1,8 +1,10 @@
+/* global parentElement, onMutate:writable, observer:writable, mutationConfig*/
+
 let zoomLevel = 0; // stores current zoom level
 let listenerAdded = false; // stores whether event listeners were added
 let zoomValues = [72, 108, 144, 180, 216]; // "z" value that Slate requires to determine size of the document render
-
-let onMutate = () => {
+// TODO:get the click drag working
+onMutate = () => {
   if (
     document.getElementById('batch_pages') !== null &&
     listenerAdded == false
@@ -12,7 +14,7 @@ let onMutate = () => {
   }
 };
 
-let observer = new MutationObserver(onMutate);
+observer = new MutationObserver(onMutate);
 observer.observe(parentElement.body, mutationConfig);
 
 parentElement.addEventListener('keypress', batchZoom, true);

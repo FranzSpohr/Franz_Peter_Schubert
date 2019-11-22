@@ -1,10 +1,12 @@
+/* global onMutate:writable, observer:writable, mutationConfig*/
+
 let zoomLevel = 0; // zoom level of a page
 let slideIndex = 1; // which page to display in viewer
-let imageLoaded = false; // toggled when higher DPI images are loaded
+let imgLoaded = false; // toggled when higher DPI images are loaded
 let activeTab; // Slate tab that the images were loaded from
 let activeAppl; // app currently being displayed
 let tooltipTimer; // for the timer that times out the tooltip after 15 seconds
-let pageNumber; // stores the element containing page numbers
+let pageNum; // stores the element containing page numbers
 
 // injects button into the footer of Slate Reader. clicking it will open the viewer.
 const buttonShow = document.createElement('input');
@@ -15,20 +17,7 @@ buttonShow.disabled = true;
 buttonShow.onclick = overlayOn;
 document.getElementsByClassName('reader_footer')[0].appendChild(buttonShow);
 
-function onMutate(mutations) {
-  if (
-    document.querySelector(
-      'body > div.reader_viewer.reader_scrollable > div > div.container.active.loaded > div > img'
-    ) !== null
-  ) {
-    console.log('loaded');
-    buttonShow.disabled = false;
-  } else {
-    buttonShow.disabled = true;
-  }
-}
-
-let observer = new MutationObserver(onMutate);
+observer = new MutationObserver(onMutate);
 observer.observe(
   document.getElementsByClassName('viewport')[0],
   mutationConfig
@@ -62,19 +51,20 @@ function overlayOn() {
   }
   // uses regular expressions to extract data needed to determine the number of needed new HTML elements
   let startPage = 1;
-  let currentPage = document
+  const currentPage = document
     .getElementsByClassName('reader_status')[0]
     .childNodes[0].textContent.match(/\d+/);
-  let endPage = document
+  const endPage = document
     .getElementsByClassName('reader_status')[0]
     .childNodes[0].textContent.match(/\d+(?=,)/);
 
   // determines which Slate tab is currently being displayed
-  let targetApp = document.getElementsByClassName('reader_header_title')[0]
+  const targetApp = document.getElementsByClassName('reader_header_title')[0]
     .innerHTML;
-  let targetTab = document.getElementsByClassName('stream active')[0].innerHTML;
+  const targetTab = document.getElementsByClassName('stream active')[0]
+    .innerHTML;
 
-  if (imageLoaded) {
+  if (imgLoaded) {
     // determines whether the Slate tab or student being displayed has changed. If changed, deletes existing HTML elements and creates new ones
     if (activeTab !== targetTab || activeAppl !== targetApp) {
       while (overlay.firstChild) {
@@ -100,8 +90,8 @@ function overlayOn() {
 function addElements(imageSrc, startPg, endPg, currPg) {
   const iframeUM = document.getElementsByTagName('iframe')[0].contentWindow
     .document.body; // iframe declared to access student info
-  let table = iframeUM.getElementsByClassName('grey')[0]; // declares table containing UMID
-  let appName = iframeUM.getElementsByClassName('fullname')[0].innerHTML; // student name
+  const table = iframeUM.getElementsByClassName('grey')[0]; // declares table containing UMID
+  const appName = iframeUM.getElementsByClassName('fullname')[0].innerHTML; // student name
   let appID =
     table.rows[1].cells[0].innerHTML + ' ' + table.rows[1].cells[1].innerHTML; // student UMID
 
@@ -162,28 +152,28 @@ function addElements(imageSrc, startPg, endPg, currPg) {
     dotHover.innerHTML = 'Page ' + i;
     navDots.appendChild(dotHover);
 
-    const imageElement = document.createElement('img'); // element for higher DPI images of the documents
-    let imageNewSrc = imageSrc.src.replace(/z=\d*/, 'z=300'); // replaces the part of URL that specifies DPI of the image
-    const errorDPI = 200; // lowers requested DPI if image fails to be loaded
+    const imgElement = document.createElement('img'); // element for higher DPI images of the documents
+    let imgNew = imageSrc.src.replace(/z=\d*/, 'z=300'); // replaces the part of URL that specifies DPI of the image
+    let errorDPI = 200; // lowers requested DPI if image fails to be loaded
 
     // modifies the page number component of the URL to attach correct pages to the slides
-    imageNewSrc = imageNewSrc.replace(/pg=\d*/, `pg=${i - 1}`);
-    imageElement.id = 'image_' + i;
-    imageElement.src = imageNewSrc;
-    imageElement.style.width = '100%';
+    imgNew = imgNew.replace(/pg=\d*/, `pg=${i - 1}`);
+    imgElement.id = 'image_' + i;
+    imgElement.src = imgNew;
+    imgElement.style.width = '100%';
     // if image cannot be loaded due to request DPI being too high, lowers DPI by 10 until loading is succesful
-    imageElement.onerror = () => {
+    imgElement.onerror = () => {
       errorDPI -= 10;
       this.src = this.src.replace(/z=\d*/, `z=${errorDPI}`);
     };
-    document.getElementById('slide_' + i).appendChild(imageElement);
+    document.getElementById('slide_' + i).appendChild(imgElement);
   }
   activeTab = document.getElementsByClassName('stream active')[0].innerHTML;
   activeAppl = document.getElementsByClassName('reader_header_title')[0]
     .innerHTML;
-  pageNumber = document.getElementById('numbertextSchubert');
+  pageNum = document.getElementById('numbertextSchubert');
   zoomLevel = 0;
-  imageLoaded = true;
+  imgLoaded = true;
   slideIndex = parseInt(currPg, 10);
   showSlides(slideIndex); // opens the viewer and displays the page currently being displayed in Slate Reader
 }
@@ -236,10 +226,13 @@ function readerZoom(mouseButton) {
 
 // displays tooltip. Should disappear after 10 seconds or upon any input from the user
 function displayTooltip() {
-  const tooltip = document.createElement('div');
-  tooltip.id = 'tooltipSchubert';
+  // eslint-disable-next-line no-undef
+  const tooltipURL = chrome.runtime.getURL('/src/html/reader_tooltip.html');
+  const tooltip = document.createElement('iframe');
+  tooltip.id = 'frameSchubert';
   tooltip.style.display = 'block';
-  // tooltip.innerHTML = '<iframe src="src/html/reader_tooltip.html" ></iframe>';
+  tooltip.name = 'iframe1';
+  tooltip.src = tooltipURL;
   document.getElementById('overlaySchubert').appendChild(tooltip);
   // automatically hides tooltip after 15 seconds
   clearTimeout(tooltipTimer);
@@ -271,27 +264,27 @@ let timeoutHandle = setTimeout(() => {
   } else {
     document.getElementById('dotContainerSchubert').style.display = 'block';
     document.getElementById('studentSchubert').style.display = 'block';
-    pageNumber.style.display = 'block';
+    pageNum.style.display = 'block';
   }
 }, 500);
 
 function hideElements() {
   document.getElementById('dotContainerSchubert').style.display = 'none';
   document.getElementById('studentSchubert').style.display = 'none';
-  pageNumber.style.display = 'none';
+  pageNum.style.display = 'none';
   clearTimeout(timeoutHandle);
   timeoutHandle = setTimeout(() => {
     if (document.getElementById('dotContainerSchubert') == null);
     document.getElementById('dotContainerSchubert').style.display = 'block';
     document.getElementById('studentSchubert').style.display = 'block';
-    pageNumber.style.display = 'block';
+    pageNum.style.display = 'block';
   }, 500);
 }
 
 // handles switching between pages
 function plusSlides(n) {
-  const currImage = document.getElementById('image_' + slideIndex);
-  currImage.setAttribute('style', 'width:100%');
+  const imgNow = document.getElementById('image_' + slideIndex);
+  imgNow.setAttribute('style', 'width:100%');
   zoomLevel = 0;
   showSlides((slideIndex += n));
   overlay.scrollTo(0, 0); // return to top of the page
@@ -321,7 +314,7 @@ function showSlides(n) {
   }
   slides[slideIndex - 1].style.display = 'block';
   dots[slideIndex - 1].className += ' activeSchubert';
-  pageNumber.innerHTML = pageNumber.innerHTML.replace(
+  pageNum.innerHTML = pageNum.innerHTML.replace(
     /^[^\d]*(\d+)/,
     'Page ' + slideIndex
   );
