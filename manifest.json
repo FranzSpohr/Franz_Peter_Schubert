@@ -4,6 +4,7 @@
   "version": "0.1",
   "author": "Theodore H. Ma",
   "description": "It does stuff on Slate.",
+  "web_accessible_resources": ["src/html/reader_tooltip.html"],
   "permissions": [
     "activeTab",
     "tabs",
@@ -51,12 +52,13 @@
       "js": [
         "src/js/vue/vue.js",
         "src/js/info_Grabber.js",
+        "src/js/dragscroll/dragscroll.js",
         "src/js/batch_zoom.js"
       ]
     },
     {
       "matches": ["https://*/manage/reader/*"],
-      "css": ["src/css/reader.css", "src/css/tooltip.css"],
+      "css": ["src/css/reader.css", "src/css/reader_tooltip.css"],
       "js": [
         "src/js/vue/vue.js",
         "src/js/httpVueLoader.js",

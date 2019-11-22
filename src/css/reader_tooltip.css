@@ -1,15 +1,18 @@
 #tooltipSchubert {
+  font-size: 15px;
+  color: white;
+  cursor: auto;
+}
+
+#frameSchubert {
   border-radius: 25px;
   border: 2px solid rgba(0, 39, 76, 0.975);
   position: fixed;
-  width: 380px;
-  height: 450px;
+  width: 400px;
+  height: 550px;
   top: 1%;
   right: 1.5%;
-  font-size: 15px;
-  color: white;
   background-color: rgba(0, 39, 76, 0.975);
-  text-align: justify;
   padding: 16px 30px;
   cursor: auto;
 }
