@@ -102,7 +102,7 @@ function addElements(imageSrc, startPg, endPg, currPg) {
   document.getElementById('overlaySchubert').appendChild(studentInfo);
 
   const openTooltip = document.createElement('div');
-  openTooltip.id = 'opentooltipSchubert';
+  openTooltip.id = 'openTooltipSchubert';
   openTooltip.innerHTML = '?';
   openTooltip.onclick = displayTooltip;
   document.getElementById('overlaySchubert').appendChild(openTooltip);
