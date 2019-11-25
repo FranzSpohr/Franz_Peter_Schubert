@@ -1,23 +1,25 @@
 /* global buttonShow*/
+
+// TODO: add Fira
+
 const currentAppl = {
   slateID: null,
   UMID: null,
   firstName: null,
   lastName: null,
   fullName: null,
-  bBday: null,
+  birthDate: null,
   applUnit: null,
   applTerm: null,
   applYear: null,
 };
 
 const mutationConfig = {
-  attributes: true,
+  attributeFilter: ['class', 'src', 'id', 'style'],
+  attributeOldValue: true,
   childList: true,
   subtree: true,
-  characterData: true,
   characterDataOldValue: true,
-  attributeFilter: ['class', 'src', 'id', 'style'],
 };
 
 const parentElement = window.document;

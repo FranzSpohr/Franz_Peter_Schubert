@@ -37,7 +37,7 @@ overlay.addEventListener('wheel', hideTooltip, {
   passive: false,
 });
 overlay.className = 'dragscroll'; // enables scrolling by mouse drag
-overlay.tabIndex = -1; // enables keyboard controls by setting focus on the overla
+overlay.tabIndex = -1; // enables keyboard controls by setting focus on the overlay
 
 // calls overlay and displays higher DPI images
 function overlayOn() {
@@ -74,7 +74,7 @@ function overlayOn() {
       addElements(imageLink, startPage, endPage, currentPage);
       displayTooltip();
     } else {
-      slideIndex = parseInt(currentPage, 10); // for whatever reason, parseInt is required to convert the slindeIndex into an integer
+      slideIndex = parseInt(currentPage, 10); // for whatever reason, parseInt is required to convert the slideIndex into an integer
       showSlides(slideIndex);
       displayTooltip();
       overlay.scrollTo(0, 0); // return to top of the page
@@ -161,7 +161,7 @@ function addElements(imageSrc, startPg, endPg, currPg) {
     imgElement.id = 'image_' + i;
     imgElement.src = imgNew;
     imgElement.style.width = '100%';
-    // if image cannot be loaded due to request DPI being too high, lowers DPI by 10 until loading is succesful
+    // if image cannot be loaded due to request DPI being too high, lowers DPI by 10 until loading is successful
     imgElement.onerror = () => {
       errorDPI -= 10;
       this.src = this.src.replace(/z=\d*/, `z=${errorDPI}`);
@@ -295,7 +295,7 @@ function currentSlide(n) {
   showSlides((slideIndex = n));
 }
 
-// adopted from slideshow turorial in W3C
+// adopted from slideshow tutorial in W3C
 function showSlides(n) {
   let i;
   const slides = document.getElementsByClassName('mySlidesSchubert');
