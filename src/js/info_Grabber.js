@@ -1,7 +1,3 @@
-/* global buttonShow*/
-
-// TODO: add Fira
-
 const currentAppl = {
   slateID: null,
   UMID: null,
@@ -15,10 +11,10 @@ const currentAppl = {
 };
 
 const mutationConfig = {
-  attributeFilter: ['class', 'src', 'id', 'style'],
-  attributeOldValue: true,
-  childList: true,
-  subtree: true,
+  //attributeFilter: ['class', 'src', 'id', 'style'],
+  //attributeOldValue: true,
+  //childList: true,
+  //subtree: true,
   characterDataOldValue: true,
 };
 
@@ -28,24 +24,17 @@ let targetElement = document.getElementsByClassName('reader_header_title')[0];
 
 let onMutate = () => {
   if (MutationRecord.oldValue !== targetElement.innerHTML) {
-    document.querySelector(
-      'body > div.reader_viewer.reader_scrollable > div > div.container.active.loaded > div > img'
-    );
-    console.log('loaded');
-    buttonShow.disabled = false;
+    console.log('app changed');
   } else {
-    buttonShow.disabled = true;
+    console.log('no change detected');
   }
 };
 
 let observer = new MutationObserver(onMutate);
-observer.observe(
-  document.getElementsByClassName('viewport')[0],
-  mutationConfig
-);
+observer.observe(targetElement, mutationConfig);
 
 observer.observe(parentElement.body, mutationConfig);
-
+/*
 currentAppl.UMID = (() => {
   const readerFrame = document.getElementsByTagName('iframe')[0].contentWindow
     .document.body;
@@ -56,3 +45,4 @@ currentAppl.UMID = (() => {
     return 'n/a';
   }
 })();
+*/
