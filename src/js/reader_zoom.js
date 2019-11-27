@@ -1,4 +1,4 @@
-/* global onMutate:writable, observer:writable, mutationConfig*/
+/* global observer:writable,parentElement:writable*/
 
 let zoomLevel = 0; // zoom level of a page
 let slideIndex = 1; // which page to display in viewer
@@ -17,11 +17,16 @@ buttonShow.disabled = true;
 buttonShow.onclick = overlayOn;
 document.getElementsByClassName('reader_footer')[0].appendChild(buttonShow);
 
-observer = new MutationObserver(onMutate);
-observer.observe(
-  document.getElementsByClassName('viewport')[0],
-  mutationConfig
-);
+let targetElement2 = parentElement.getElementsByClassName(
+  'reader_status hidden'
+)[0];
+
+observer = new MutationObserver(() => {
+  console.log('tab changed ' + targetElement2.innerHTML);
+});
+observer.observe(targetElement2, {
+  attributeFilter: ['aria-hidden'],
+});
 
 // creates an overlay that serves as a canvas for all elements created by this userscript
 const overlay = document.createElement('div');
