@@ -1,6 +1,20 @@
+const readerFrame = document.getElementsByTagName('iframe')[0];
+
+readerFrame.addEventListener('load', function() {
+  console.log(currentAppl.UMID());
+});
+
 const currentAppl = {
   slateID: null,
-  UMID: null,
+  UMID: function() {
+    const frameContent = readerFrame.contentWindow.document.body;
+    const frameTable = frameContent.getElementsByClassName('grey')[0];
+    if (frameTable.rows[1].cells[0].innerHTML == 'UMID:') {
+      return frameTable.rows[1].cells[1].innerHTML;
+    } else {
+      return 'n/a';
+    }
+  },
   firstName: null,
   lastName: null,
   fullName: null,
@@ -10,39 +24,16 @@ const currentAppl = {
   applYear: null,
 };
 
-const mutationConfig = {
-  //attributeFilter: ['class', 'src', 'id', 'style'],
-  //attributeOldValue: true,
-  //childList: true,
-  //subtree: true,
-  characterDataOldValue: true,
-};
-
 const parentElement = window.document;
 
-let targetElement = document.getElementsByClassName('reader_header_title')[0];
+let targetElement1 = parentElement.getElementsByClassName(
+  'reader_header_title'
+)[0];
 
-let onMutate = () => {
-  if (MutationRecord.oldValue !== targetElement.innerHTML) {
-    console.log('app changed');
-  } else {
-    console.log('no change detected');
+let observer = new MutationObserver(() => {
+  if (targetElement1.textContent !== 'Technolutions Slate') {
+    console.log(currentAppl.UMID());
   }
-};
+});
 
-let observer = new MutationObserver(onMutate);
-observer.observe(targetElement, mutationConfig);
-
-observer.observe(parentElement.body, mutationConfig);
-/*
-currentAppl.UMID = (() => {
-  const readerFrame = document.getElementsByTagName('iframe')[0].contentWindow
-    .document.body;
-  const readerTable = readerFrame.getElementsByClassName('grey')[0];
-  if (readerTable.rows[1].cells[0].innerHTML == 'UMID:') {
-    return readerTable.rows[1].cells[1].innerHTML;
-  } else {
-    return 'n/a';
-  }
-})();
-*/
+observer.observe(targetElement1, { childList: true });
