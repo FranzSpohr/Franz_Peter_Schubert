@@ -1,4 +1,4 @@
-/* global observer:writable,parentElement:writable*/
+/* global observer:writable,targetElement:writable*/
 
 let zoomLevel = 0; // zoom level of a page
 let slideIndex = 1; // which page to display in viewer
@@ -17,14 +17,16 @@ buttonShow.disabled = true;
 buttonShow.onclick = overlayOn;
 document.getElementsByClassName('reader_footer')[0].appendChild(buttonShow);
 
-let targetElement2 = parentElement.getElementsByClassName(
-  'reader_status hidden'
-)[0];
+targetElement('.reader_status');
 
 observer = new MutationObserver(() => {
-  console.log('tab changed ' + targetElement2.innerHTML);
+  if (targetElement('.reader_status').innerHTML !== '') {
+    console.log('tab changed ' + targetElement('.reader_status').innerHTML);
+  } else {
+    return;
+  }
 });
-observer.observe(targetElement2, {
+observer.observe(targetElement('.reader_status'), {
   attributeFilter: ['aria-hidden'],
 });
 
