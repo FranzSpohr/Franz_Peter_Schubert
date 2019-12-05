@@ -29,7 +29,6 @@ function addListener() {
     elements.forEach(el => {
       el.addEventListener('click', batchZoom, true);
       el.addEventListener('contextmenu', batchZoom, true);
-      el.classList.add('dragscroll');
     });
 
     // needed to determine whether "next" buttons, etc. are pressed, meaning listeners have to be attached again

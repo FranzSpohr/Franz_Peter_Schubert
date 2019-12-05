@@ -33,15 +33,17 @@ observer.observe(targetElement('.reader_header_title'), { childList: true });
 
 function frameLoaded() {
   return new Promise(resolve => {
-    resolve(console.log('hmph'));
+    resolve(console.log('hello'));
   });
 }
 
-// TODO: probably something to do with iframe, eventlistener is not firing when it should
+// TODO: probably something to do with iframe, eventListener is not firing when it should
 observer = new MutationObserver(mutations => {
   for (let mutation of mutations) {
     if (mutation.target.nodeName == 'IFRAME') {
-      targetElement('iframe').addEventListener('load', frameLoaded());
+      targetElement('iframe').addEventListener('load', () => {
+        console.log('howdy');
+      });
     }
   }
 });
