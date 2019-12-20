@@ -98,3 +98,5 @@ dist/
 node_modules/
 .gitignore
 .gitignore
+/.vs/
+/.vscode/
