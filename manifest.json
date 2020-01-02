@@ -47,7 +47,6 @@
       "matches": [
         "https://*/manage/database/acquire",
         "https://*/manage/lookup/*",
-        "https://*/manage/inbox/*"
       ],
       "js": [
         "src/js/vue/vue.js",
@@ -63,8 +62,19 @@
         "src/js/vue/vue.js",
         "src/js/httpVueLoader.js",
         "src/js/dragscroll/dragscroll.js",
-        "src/js/info_Grabber.js",
+        "src/js/info_grabber.js",
         "src/js/reader_zoom.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*/manage/inbox/*"
+      ],
+      "js": [
+        "src/js/vue/vue.js",
+        "src/js/info_grabber.js",
+        "src/js/batch_zoom.js",
+        "src/js/inbox_assigner.js"
       ]
     }
   ]
