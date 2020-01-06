@@ -46,7 +46,7 @@
     {
       "matches": [
         "https://*/manage/database/acquire",
-        "https://*/manage/lookup/*",
+        "https://*/manage/lookup/*"
       ],
       "js": [
         "src/js/vue/vue.js",
