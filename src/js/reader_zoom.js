@@ -13,7 +13,7 @@ const buttonShow = document.createElement('input');
 buttonShow.type = 'button';
 buttonShow.id = 'buttonSchubert';
 buttonShow.value = 'Display Larger Images';
-buttonShow.disabled = true;
+buttonShow.disabled = false;
 buttonShow.onclick = overlayOn;
 document.getElementsByClassName('reader_footer')[0].appendChild(buttonShow);
 
